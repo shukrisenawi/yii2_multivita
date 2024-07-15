@@ -17,7 +17,7 @@ $user = Yii::$app->user->identity;
                     <h1 class=" count4">
                         <?= str_replace("-", "", $user->point) ?>
                     </h1>
-                    <p>Point Terkumpul</p>
+                    <p>Total Points</p>
                 </div>
             </section>
         </div>

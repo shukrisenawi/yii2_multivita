@@ -90,15 +90,15 @@ $select = Yii::$app->getRequest()->getQueryParam('select');
                         <?php if (Yii::$app->user->identity->isMember()) { ?>
                             <li class="dropdown">
                                 <?php
-                                $pointActiveDate = date("d-m-Y H:iA", strtotime(Yii::$app->user->identity->maintain_point));
+                                $pointActiveDate = Yii::$app->user->identity->maintain_point && Yii::$app->user->identity->maintain_point != '0000-00-00 00:00:00' ? date("d-m-Y H:iA", strtotime(Yii::$app->user->identity->maintain_point)) : null;
                                 if (Yii::$app->user->identity->checkMaintainPoint()) { ?>
-                                    <a class="dropdown-toggle alert alert-success" href="#">
+                                    <a class="dropdown-toggle" href="#">
                                         <i class="fa fa-comment-dollar"></i> <span>E-Point : <?= str_replace("-", "", Yii::$app->user->identity->point) ?>,
-                                        </span><span class=""> Active (<?= $pointActiveDate ?>)</span>
+                                        </span><span class=""> <small><strong>Active (Exp: <?= $pointActiveDate ?>)</strong></small></span>
                                     </a>
                                 <?php } else { ?>
-                                    <a class="dropdown-toggle alert alert-success" href="#">
-                                        <span class="badge badge-denger">E-Point : inactive (<?= $pointActiveDate ?>)</span>
+                                    <a class="dropdown-toggle" href="#">
+                                        <i class="fa fa-usd"></i> <span> <span class="">E-Point : <?= str_replace("-", "", Yii::$app->user->identity->point) ?>, <small class="badge-danger" style="padding-left:10px;padding-right:10px"><strong>inactive <?= $pointActiveDate ? "(Exp: " . $pointActiveDate . ")" : "" ?></strong></small></span>
                                     </a>
                                 <?php } ?>
                             </li>

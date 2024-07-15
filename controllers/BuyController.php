@@ -10,6 +10,7 @@ use app\models\BuyForm;
 use dominus77\sweetalert2\Alert;
 use app\models\User;
 use app\models\Buy;
+use yii\base\Exception;
 
 /**
  * NewsController implements the CRUD actions for News model.
@@ -58,6 +59,7 @@ class BuyController extends MemberController
                         $buy->quantity = $model->quantity;
                         if ($buy->save()) {
                             $user->maintain = 1;
+                            $user->maintain_point = date('Y-m-d H:i:s', strtotime("+3 months"));
                             $user->save(false);
                         }
                         $buyBonus = $model->quantity * 5;

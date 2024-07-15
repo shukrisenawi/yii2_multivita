@@ -29,15 +29,15 @@ $this->params['breadcrumbs'][] = $this->title;
                     'value' => function ($model, $key, $index, $widget) {
                         return Html::a($model->user->username, \yii\helpers\Url::to(['user/view', 'id' => $model->user_id, 'username' => $model->user->username]), ['title' => 'Papar ahli']);
                     },
-                    'filter'
-                    => Select2::widget([
-                        'name' => 'Username',
-                        'data' => ArrayHelper::map(Transaction::find()->asArray()->with('user')->groupBy('user_id')->all(), 'user_id', 'user.username'),
-                        'options' => [
-                            'placeholder' => 'All',
-                            'multiple' => false
-                        ],
-                    ]),
+                    // 'filter'
+                    // => Select2::widget([
+                    //     'name' => 'Username',
+                    //     'data' => ArrayHelper::map(Transaction::find()->asArray()->with('user')->groupBy('user_id')->all(), 'user_id', 'user.username'),
+                    //     'options' => [
+                    //         'placeholder' => 'All',
+                    //         'multiple' => false
+                    //     ],
+                    // ]),
                     'format' => 'raw'
                 ],
                 'remarks',

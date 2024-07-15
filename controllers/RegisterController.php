@@ -65,6 +65,7 @@ class RegisterController extends MemberController
             $model->scenario = 'memberRegister';
             $model->activated = 1;
             $model->created_at = date('Y-m-d H:i:s');
+            $model->maintain_point = date('Y-m-d H:i:s', strtotime("+3 months"));
             $model->register_id = Yii::$app->user->id;
             $model->username = $this->createUsername();
             $model->level_id = $this->select;

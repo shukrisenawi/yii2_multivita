@@ -56,6 +56,7 @@ class MemberPointSearch extends User
     {
         $query = User::find();
         $this->mainFilter($query);
+        $query->andFilterWhere(['>=', 'maintain_point',  date('Y-m-d H:i:s')]);
         return $query->count();
     }
 
