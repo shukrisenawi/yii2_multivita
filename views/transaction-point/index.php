@@ -1,13 +1,8 @@
 <?php
 
-use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
-use yii\helpers\ArrayHelper;
-use app\models\Transaction;
-use app\components\Helper;
 use kartik\daterange\DateRangePicker;
-use kartik\select2\Select2;
 
 $this->title = 'Transaksi';
 $this->params['breadcrumbs'][] = $this->title;

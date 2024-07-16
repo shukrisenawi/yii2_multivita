@@ -4,7 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\User;
-use app\Models\MemberPointSearch;
+use app\models\MemberPointSearch;
 use app\components\MemberController;
 use app\models\PointAddForm;
 
