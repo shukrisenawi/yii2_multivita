@@ -5,17 +5,16 @@ namespace app\models;
 use yii\base\Model;
 use app\components\Helper;
 use app\models\Transaction;
-use yii\base\Exception;
 use Yii;
+use yii\base\Exception;
 
 /**
  * Signup form
  */
-class WithdrawalPointForm extends Model
+class RedeemForm extends Model
 {
 
     public $amount;
-    public $remark;
     public $pass;
     /**
      * {@inheritdoc}
@@ -24,7 +23,6 @@ class WithdrawalPointForm extends Model
     {
         return [
             [['amount', 'pass'], 'required'],
-            ['remark', 'string'],
             ['amount', 'number'],
             ['amount', 'checkWallet'],
             ['amount', 'checkPass'],
@@ -39,14 +37,17 @@ class WithdrawalPointForm extends Model
     public function attributeLabels()
     {
         return [
-            'amount' => 'Amount (point)',
+            'amount' => 'Total Point',
             'pass' => 'Password',
         ];
     }
 
     public function checkWallet($attribute)
     {
-        if ($this->$attribute > str_replace("-", "", Yii::$app->user->identity->point)) {
+        $setting = Settings::value();
+        if ($this->$attribute < $setting['min_redeem']) {
+            $this->addError($attribute, 'Redeem minimum is ' . $setting['min_redeem'] . ' points.');
+        } else if ($this->$attribute > Yii::$app->user->identity->point) {
             $this->addError($attribute, 'E-Point not enough!');
         }
     }
@@ -57,9 +58,12 @@ class WithdrawalPointForm extends Model
         $trans = $conn->beginTransaction();
         $setting = Settings::value();
         try {
-            $data = ['remark' => $this->remark ? "( " . $this->remark . " )" : ""];
-            if ($id = Transaction::createTransaction(Yii::$app->user->id, 0, 27, $this->amount, $data)) {
-                $trans->commit();
+            $ewalletAdd = $this->amount / $setting['rate_point'];
+            $data1 = ['amount' => $ewalletAdd];
+            if ($id = Transaction::createTransaction(Yii::$app->user->id, 0, 23, $this->amount, $data1)) {
+                $data2 = ['amount' => $this->amount];
+                if ($id && Transaction::createTransaction(Yii::$app->user->id, $id, 24, $ewalletAdd, $data2))
+                    $trans->commit();
                 return true;
             } else {
                 return false;

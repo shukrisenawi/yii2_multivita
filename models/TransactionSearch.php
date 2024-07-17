@@ -14,6 +14,7 @@ class TransactionSearch extends Transaction
     public $level_id;
     public $withdrawal;
     public $point;
+    public $redeem;
     public $transfer;
     public $dateFilter;
     public $userFilter;
@@ -71,6 +72,10 @@ class TransactionSearch extends Transaction
             $query->andWhere('type_id=27 AND date_success IS NULL');
         } else if ($this->point == 2) {
             $query->andWhere('(type_id=27 AND date_success IS NOT NULL)');
+        }
+
+        if ($this->redeem == 1) {
+            $query->andWhere('type_id=23');
         }
 
         if ($this->transfer) {

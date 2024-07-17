@@ -98,6 +98,7 @@ class Menu extends \yii\bootstrap\Widget
                 ['icon' => 'fa fa-cart-arrow-down', 'label' => 'Buy', 'url' => ['/buy-product/index']],
                 ['icon' => 'fa fa-user-friends', 'label' => 'Downline', 'url' => ['/user/downline']],
                 ['icon' => 'fa fa-hand-holding-usd', 'label' => 'Withdrawal', 'url' => ['/withdrawal/index']],
+                ['icon' => 'fa fa-usd', 'label' => ' Point Redeem', 'url' => ['/point-redeem/index']],
                 ['icon' => 'fa fa-comments-dollar', 'label' => 'Transfer Ewallet', 'url' => ['/transfer/index']],
                 ['icon' => 'fa fa-exchange-alt', 'label' => 'Transaction', 'url' => ['/transaction/index']],
                 ['icon' => 'fa fa-user-secret', 'label' => 'Stockist', 'url' => ['/list-stockist/index']],

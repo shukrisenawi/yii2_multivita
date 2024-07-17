@@ -186,7 +186,7 @@ $select = Yii::$app->getRequest()->getQueryParam('select');
                                         <div style="text-align:right">
                                             <?php
                                             foreach ($session['subBtn'] as $btnKey => $btnValue) { ?>
-                                                <a class="btn btn-dark btn-lg" href="<?= Url::to($btnValue['url']) ?>"><?= $btnValue['label'] ?></a>
+                                                <a class="btn btn-dark btn-sm" href="<?= Url::to($btnValue['url']) ?>"><?= $btnValue['label'] ?></a>
 
                                         </div>
                                     </div>
