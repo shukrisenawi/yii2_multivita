@@ -98,7 +98,7 @@ $select = Yii::$app->getRequest()->getQueryParam('select');
                                     </a>
                                 <?php } else { ?>
                                     <a class="dropdown-toggle" href="#">
-                                        <i class="fa fa-usd"></i> <span> <span class="">E-Point : <?= str_replace("-", "", Yii::$app->user->identity->point) ?>, <small class="badge-danger" style="padding-left:10px;padding-right:10px"><strong>inactive <?= $pointActiveDate ? "(Exp: " . $pointActiveDate . ")" : "" ?></strong></small></span>
+                                        <i class="fa fa-usd"></i> <span> <span class="">E-Point : <?= str_replace("-", "", Yii::$app->user->identity->point) ?>&nbsp; <small class="badge-default" style="background-color:black;padding-left:10px;padding-right:10px; color:white;"><strong>inactive <?= $pointActiveDate ? "(Exp: " . $pointActiveDate . ")" : "" ?></strong></small></span>
                                     </a>
                                 <?php } ?>
                             </li>

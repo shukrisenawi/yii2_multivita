@@ -59,12 +59,19 @@ class Level extends \yii\db\ActiveRecord
         $labelMember = "Ahli Biasa";
         $labelMerchant = "Peniaga";
 
-        if (Yii::$app->user->identity->isStockistState() || Yii::$app->user->identity->isAdmin()) {
+        if (Yii::$app->user->identity->isAdmin()) {
             return [
                 // 2 => $labelStockistState,
                 // 3 => $labelStockist,
                 4 => $labelStockistMobile,
                 7 => $labelMerchant,
+                5 => $labelMember
+            ];
+        } else if (Yii::$app->user->identity->isStockistState()) {
+            return [
+                // 2 => $labelStockistState,
+                // 3 => $labelStockist,
+                4 => $labelStockistMobile,
                 5 => $labelMember
             ];
         } else if (Yii::$app->user->identity->isStockist()) {
