@@ -59,7 +59,7 @@ class BuyController extends MemberController
                         $buy->quantity = $model->quantity;
                         if ($buy->save()) {
                             $user->maintain = 1;
-                            $user->maintain_point = date('Y-m-d H:i:s', strtotime("+3 months"));
+                            $user->maintain_point = date('Y-m-d H:i:s', strtotime("+6 months"));
                             $user->save(false);
                         }
                         $buyBonus = $model->quantity * 5;
