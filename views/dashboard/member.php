@@ -7,27 +7,57 @@ $user = Yii::$app->user->identity;
 
 <div class="row">
     <?php if (!Yii::$app->user->identity->maintain && date("Y-m") != date("Y-m", strtotime(Yii::$app->user->identity->created_at))) { ?>
-    <div class="col-sm-12">
-        <div class="alert alert-danger text-center"><strong>You must buy at least 1 multivita for get repurchase
-                bonus</strong> </div>
-    </div>
+        <div class="col-sm-12">
+            <div class="alert alert-danger text-center"><strong>You must buy at least 1 multivita for get repurchase
+                    bonus</strong> </div>
+        </div>
     <?php } ?>
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="state-overview col-lg-6">
+                <section class="card">
+                    <div class="symbol yellow">
+                        <i class="fa fa-hand-holding-usd"></i>
+                    </div>
+                    <div class="value">
+                        <h1 class=" count4">
+                            <?= $user->ewallet ?>
+                        </h1>
+                        <a href="#">E-Wallet</a>
+                    </div>
+                </section>
+            </div>
+            <div class="state-overview col-lg-6">
+                <section class="card">
+                    <div class="symbol blue">
+                        <i class="fa fa-usd"></i>
+                        <span>E-POINT</span>
+                    </div>
+                    <div class="value">
+
+                        <h3 class=" count4">
+                            <?= $user->point ?>
+                        </h3>
+                        <?php
+                        $pointActiveDate = Yii::$app->user->identity->maintain_point && Yii::$app->user->identity->maintain_point != '0000-00-00 00:00:00' ? date("d-m-Y H:iA", strtotime(Yii::$app->user->identity->maintain_point)) : null;
+                        if (Yii::$app->user->identity->checkMaintainPoint()) { ?>
+                            <a href="#">
+                                <span class=""> <strong>Active (Exp: <?= $pointActiveDate ?>)</strong></span>
+                            </a>
+                        <?php } else { ?>
+                            <a href="#">
+                                <span class="">E-Point
+                                    &nbsp; <small class="badge-default" style="background-color:black;padding-left:10px;padding-right:10px; color:white;"><strong>inactive <?= $pointActiveDate ? "(Exp: " . $pointActiveDate . ")" : "" ?></strong></small></span>
+                            </a>
+                        <?php } ?>
+                    </div>
+                </section>
+            </div>
+
+        </div>
+    </div>
     <div class="col-lg-4">
         <!--user info table start-->
-        <div class="state-overview">
-            <section class="card">
-                <div class="symbol yellow">
-                    <i class="fa fa-hand-holding-usd"></i>
-                </div>
-                <div class="value">
-                    <h1 class=" count4">
-                        <?= $user->ewallet ?>
-                    </h1>
-                    <p>E-Wallet</p>
-                </div>
-            </section>
-        </div>
-
 
         <section class="card">
             <div class="card-body bg-danger">
@@ -44,33 +74,33 @@ $user = Yii::$app->user->identity;
                 <tbody>
                     <?php
                     if ($news) {
-                        ?>
-                    <?php
+                    ?>
+                        <?php
                         foreach ($news as $value) { ?>
 
-                    <tr>
-                        <td width="5px">
-                            <i class=" fa fa-angle-double-right"></i>
-                        </td>
-                        <td style="text-align:left"><?= $value->title  ?></td>
-                        <td><?= Helper::viewDate($value->created_at) ?></td>
-                    </tr>
-                    <?php if ($value->news) { ?>
-                    <tr>
-                        <td></td>
-                        <td style="text-align:left" colspan="2">
-                            <?= $value->news ?>
-                        </td>
-                    </tr>
-                    <?php } ?>
-                    <?php } ?>
+                            <tr>
+                                <td width="5px">
+                                    <i class=" fa fa-angle-double-right"></i>
+                                </td>
+                                <td style="text-align:left"><?= $value->title  ?></td>
+                                <td><?= Helper::viewDate($value->created_at) ?></td>
+                            </tr>
+                            <?php if ($value->news) { ?>
+                                <tr>
+                                    <td></td>
+                                    <td style="text-align:left" colspan="2">
+                                        <?= $value->news ?>
+                                    </td>
+                                </tr>
+                            <?php } ?>
+                        <?php } ?>
                     <?php } else { ?>
-                    <tr>
-                        <td>
-                            <i class=" fa fa-times"></i>
-                        </td>
-                        <td style="text-align:left">Empty</td>
-                    </tr>
+                        <tr>
+                            <td>
+                                <i class=" fa fa-times"></i>
+                            </td>
+                            <td style="text-align:left">Empty</td>
+                        </tr>
                     <?php } ?>
                 </tbody>
             </table>
@@ -92,27 +122,27 @@ $user = Yii::$app->user->identity;
                 </div>
             </div>
             <?php if (isset($transaction) && $transaction) { ?>
-            <table class="table table-striped">
-                <thead>
-                    <?php
+                <table class="table table-striped">
+                    <thead>
+                        <?php
                         foreach ($transaction as $valueTransaction) {
-                            ?>
-                    <tr>
-                        <td><?= $valueTransaction['remarks'] ?></td>
-                        <td><?= Helper::convertMoney($valueTransaction['value']) ?></td>
-                        <td style="text-align:right">
-                            <?= Helper::viewDate($valueTransaction['date'], 'd-m-Y, h:iA') ?>
-                        </td>
-                    </tr>
+                        ?>
+                            <tr>
+                                <td><?= $valueTransaction['remarks'] ?></td>
+                                <td><?= Helper::convertMoney($valueTransaction['value']) ?></td>
+                                <td style="text-align:right">
+                                    <?= Helper::viewDate($valueTransaction['date'], 'd-m-Y, h:iA') ?>
+                                </td>
+                            </tr>
 
-                    <?php
+                        <?php
                         } ?>
-                </thead>
-            </table>
+                    </thead>
+                </table>
             <?php } else { ?>
-            <div class="m-list-timeline__item text-center" style="padding:20px">
-                <span class="m-list-timeline__text">Empty</span>
-            </div>
+                <div class="m-list-timeline__item text-center" style="padding:20px">
+                    <span class="m-list-timeline__text">Empty</span>
+                </div>
             <?php } ?>
         </section>
         <!--work progress end-->

@@ -32,6 +32,7 @@ class CronController extends Controller
 
         try {
             User::updateAll(['stockist_on' => 0]);
+            $this->countDownline();
             User::updateAll(['stockist_on' => 1], 'downline_stockist>=5');
             User::updateAll(['downline_stockist' => 0]);
             $trans->commit();
@@ -40,6 +41,24 @@ class CronController extends Controller
             echo $e;
             $trans->rollback();
         }
+    }
+
+    public function countDownline()
+    {
+        $month = date('m', strtotime("-1 months"));
+        $year = date('Y', strtotime("-1 months"));
+
+        $stockist = User::find()->select('register_id,count(register_id) as total')->where('MONTH(created_at)=:month AND YEAR(created_at)=:year', [':month' => $month, ':year' => $year])->groupBy('register_id')->all();
+        $i = 0;
+        foreach ($stockist as $user) {
+            $updateUser[$i] = User::findOne(['id' => $user->register_id]);
+            if ($updateUser[$i]) {
+                $updateUser[$i]->downline_stockist = $user->total;
+                $updateUser[$i]->save(false);
+            }
+            $i++;
+        }
+        echo "success count downline<br>";
     }
 
     public function actionRunBonusMaintain()
