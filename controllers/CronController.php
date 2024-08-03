@@ -126,6 +126,7 @@ class CronController extends Controller
             echo "Tiada bonus yang dibayar!";
         }
         return 200;
+
         exit;
     }
 }
