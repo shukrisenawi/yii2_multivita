@@ -16,6 +16,21 @@ $user = Yii::$app->user->identity;
         <div class="row">
             <div class="state-overview col-lg-6">
                 <section class="card">
+                    <div class="symbol blue">
+                        <i class="fa fa-usd"></i>
+                    </div>
+                    <div class="value">
+
+                        <h3 class=" count4">
+                            <?= $user->point ?>
+                        </h3>
+                        <a href="#">E-Point</a>
+
+                    </div>
+                </section>
+            </div>
+            <div class="state-overview col-lg-6">
+                <section class="card">
                     <div class="symbol yellow">
                         <i class="fa fa-hand-holding-usd"></i>
                     </div>
@@ -27,38 +42,25 @@ $user = Yii::$app->user->identity;
                     </div>
                 </section>
             </div>
-            <div class="state-overview col-lg-6">
-                <section class="card">
-                    <div class="symbol blue">
-                        <i class="fa fa-usd"></i>
-                        <span>E-POINT</span>
-                    </div>
-                    <div class="value">
 
-                        <h3 class=" count4">
-                            <?= $user->point ?>
-                        </h3>
-                        <?php
-                        $pointActiveDate = Yii::$app->user->identity->maintain_point && Yii::$app->user->identity->maintain_point != '0000-00-00 00:00:00' ? date("d-m-Y H:iA", strtotime(Yii::$app->user->identity->maintain_point)) : null;
-                        if (Yii::$app->user->identity->checkMaintainPoint()) { ?>
-                            <a href="#">
-                                <span class=""> <strong>Active (Exp: <?= $pointActiveDate ?>)</strong></span>
-                            </a>
-                        <?php } else { ?>
-                            <a href="#">
-                                <span class="">E-Point
-                                    &nbsp; <small class="badge-default" style="background-color:black;padding-left:10px;padding-right:10px; color:white;"><strong>inactive <?= $pointActiveDate ? "(Exp: " . $pointActiveDate . ")" : "" ?></strong></small></span>
-                            </a>
-                        <?php } ?>
-                    </div>
-                </section>
-            </div>
 
         </div>
     </div>
     <div class="col-lg-4">
         <!--user info table start-->
-
+        <div class="alert alert-info">
+            <?php
+            $pointActiveDate = Yii::$app->user->identity->maintain_point && Yii::$app->user->identity->maintain_point != '0000-00-00 00:00:00' ? date("d-m-Y H:iA", strtotime(Yii::$app->user->identity->maintain_point)) : null;
+            if (Yii::$app->user->identity->checkMaintainPoint()) { ?>
+                <a href="#">
+                    <span class="">Status E-Point : <strong>Active (Exp: <?= $pointActiveDate ?>)</strong></span>
+                </a>
+            <?php } else { ?>
+                <a href="#">
+                    <span class="">Status E-Point : <span style="background-color:#60bed2;padding-left:5px;padding-right:5px; color:white;"><strong>inactive <?= $pointActiveDate ? "(Exp: " . $pointActiveDate . ")" : "" ?></strong></span></span>
+                </a>
+            <?php } ?>
+        </div>
         <section class="card">
             <div class="card-body bg-danger">
                 <div class="row">

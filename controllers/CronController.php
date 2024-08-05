@@ -42,23 +42,45 @@ class CronController extends Controller
             $trans->rollback();
         }
     }
-
-    public function countDownline()
+    public function actionRunBonusStockist()
     {
-        $month = date('m', strtotime("-1 months"));
-        $year = date('Y', strtotime("-1 months"));
+        $year = 2024;
+        for ($i = 1; $i <= 5; $i++) {
+            $stockist[$i] = User::find()->select('register_id,count(register_id) as total')->where('MONTH(created_at)=:month AND YEAR(created_at)=:year', [':month' => $i, ':year' => $year])->groupBy('register_id')->all();
 
-        $stockist = User::find()->select('register_id,count(register_id) as total')->where('MONTH(created_at)=:month AND YEAR(created_at)=:year', [':month' => $month, ':year' => $year])->groupBy('register_id')->all();
-        $i = 0;
-        foreach ($stockist as $user) {
-            $updateUser[$i] = User::findOne(['id' => $user->register_id]);
-            if ($updateUser[$i]) {
-                $updateUser[$i]->downline_stockist = $user->total;
-                $updateUser[$i]->save(false);
+            foreach ($stockist[$i] as $user[$i]) {
             }
-            $i++;
+
+
+            $upline[$i] = User::find()->select('id,username,upline_id,downline_stockist')->where(['id' => $user->register_id, 'level_id' => 4])->one();
+            $data[$i]['username'] = $user[$i]->username;
+            $data[$i]['stockist'] = $upline[$i]->username;
+
+            $uplineStockist[$i] = User::find()->select('id,stockist_on')->where(['id' => $upline->upline_id, 'level_id' => 4])->one();
+            if ($uplineStockist[$i] && $uplineStockist[$i]->id && $uplineStockist[$i]->stockist_on)
+                Transaction::createTransaction($uplineStockist[$i]->id, $user[$i]->id, 21, 5, $data[$i]);
         }
-        echo "success count downline<br>";
+    }
+    public function countDownline($month = false, $year = false)
+    {
+        $month ?? date('m', strtotime("-1 months"));
+        $year ?? date('Y', strtotime("-1 months"));
+        if ($month && $year) {
+
+            $stockist = User::find()->select('register_id,count(register_id) as total')->where('MONTH(created_at)=:month AND YEAR(created_at)=:year', [':month' => $month, ':year' => $year])->groupBy('register_id')->all();
+            $i = 0;
+            foreach ($stockist as $user) {
+                $updateUser[$i] = User::findOne(['id' => $user->register_id]);
+                if ($updateUser[$i]) {
+                    $updateUser[$i]->downline_stockist = $user->total;
+                    $updateUser[$i]->save(false);
+                }
+                $i++;
+            }
+            echo "success count downline<br>";
+        } else {
+            echo "Month or year input empty!";
+        }
     }
 
     public function actionRunBonusMaintain()
