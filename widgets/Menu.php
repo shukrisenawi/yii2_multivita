@@ -101,6 +101,7 @@ class Menu extends \yii\bootstrap\Widget
                 ['icon' => 'fa fa-usd', 'label' => ' Point Redeem', 'url' => ['/point-redeem/index']],
                 ['icon' => 'fa fa-comments-dollar', 'label' => 'Transfer Ewallet', 'url' => ['/transfer/index']],
                 ['icon' => 'fa fa-exchange-alt', 'label' => 'Transaction', 'url' => ['/transaction/index']],
+                ['icon' => 'fa fa-usd', 'label' => 'Transaction Points', 'url' => ['/view-point/index']],
                 ['icon' => 'fa fa-user-secret', 'label' => 'Stockist', 'url' => ['/list-stockist/index']],
                 ['icon' => 'fa fa-portrait', 'label' => 'Profile', 'url' => ['/profile/index'], 'hidden' => true],
             ];
