@@ -48,9 +48,9 @@ class PointAddForm extends Model
                 $data1 = ['username' => $user['username'], 'remark' => $this->remark];
                 $data2 = ['name' => Yii::$app->user->identity->name];
 
-                Transaction::createTransaction($this->id, Yii::$app->user->id, 28, $this->amount, $data2);
-                $adminAmount = $this->amount / 0.8;
-                Transaction::createTransaction(Yii::$app->user->id, $this->id, 25, $adminAmount, $data1);
+                Transaction::createTransaction(Yii::$app->user->id, $this->id, 25, $this->amount, $data1);
+                $adminAmount = $this->amount * 0.8;
+                Transaction::createTransaction($this->id, Yii::$app->user->id, 28, $adminAmount, $data2);
             }
             return true;
         } else {
