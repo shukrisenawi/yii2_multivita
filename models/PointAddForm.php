@@ -25,7 +25,7 @@ class PointAddForm extends Model
         return [
             [['id', 'amount', 'remark'], 'required'],
             ['remark', 'string'],
-            ['amount', 'number', 'max' => 5000],
+            ['amount', 'number', 'max' => 1000],
             [['id'], 'integer'],
         ];
     }
