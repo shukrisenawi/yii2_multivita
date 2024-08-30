@@ -45,9 +45,10 @@ class RedeemForm extends Model
     public function checkWallet($attribute)
     {
         $setting = Settings::value();
-        if ($this->$attribute < $setting['min_redeem']) {
-            $this->addError($attribute, 'Redeem minimum is ' . $setting['min_redeem'] . ' points.');
-        } else if ($this->$attribute > Yii::$app->user->identity->point) {
+        // if ($this->$attribute < $setting['min_redeem']) {
+        //     $this->addError($attribute, 'Redeem minimum is ' . $setting['min_redeem'] . ' points.');
+        // } else
+        if ($this->$attribute > Yii::$app->user->identity->point) {
             $this->addError($attribute, 'E-Point not enough!');
         }
     }
