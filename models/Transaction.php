@@ -96,6 +96,7 @@ class Transaction extends \yii\db\ActiveRecord
                 $user->{$type['wallet']} += str_replace("-", '', $amount);
             else
                 $user->{$type['wallet']} += $type['credit'] . $amount;
+
             $user->save(false);
         }
         return $transaction->id;

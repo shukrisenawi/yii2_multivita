@@ -33,6 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ?>
             <div class="modal-body">
                 <?= $form->field($formAddPoint, 'amount')->textInput(['maxlength' => true, 'id' => 'amount', 'required' => true]) ?>
+                <?= $form->field($formAddPoint, 'type')->radioList([1 => 'Add Point', 2 => 'Deduct Point'], ['id' => 'type', 'value' => 1, 'required' => true]) ?>
                 <?= $form->field($formAddPoint, 'remark')->textInput(['maxlength' => true, 'required' => true]) ?>
             </div>
             <div class="modal-footer">
@@ -54,14 +55,18 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php } ?> $('#btnSave').click(function() {
         $.post("<?= Url::to(['point-search/add-point']) ?>", $("#formPost").serialize()).done(function(data) {
             if (data == 1) {
-                alert('Point successful added!!');
+                var type = $("input[name='PointAddForm[type]']:checked").val();
+                var text1 = type == 1 ? "added" : "deducted";
+                var text2 = type == 1 ? "Added" : "Deducted";
+                var badge = type == 1 ? "primary" : "danger";
+                alert('Point successful ' + text1 + '!!');
                 var amount = $('#amount').val();
                 var id = $('#u-id').val();
                 document.getElementById("formPost").reset();
                 $('#btnClose').click();
                 $('#inputSearch').focus();
-                $('#btnAdd' + id).html('Added : ' + amount + ' points');
-                $('#btnAdd' + id).attr('class', 'badge badge-primary');
+                $('#btnAdd' + id).html(text2 + ' : ' + amount + ' points');
+                $('#btnAdd' + id).attr('class', 'badge badge-' + badge);
             } else {
                 alert(data);
             }
@@ -130,7 +135,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'buttons' => [
                                         'addPoint' => function ($url, $model, $key) {
                                             if ($model->checkMaintainPoint()) {
-                                                return '<span id="btnAdd' . $model->id . '"><a onclick="javascript:generateId(' . $model->id . ')" type="button" data-toggle="modal" data-target="#addPoint"><i class="fa fa-plus success"></i> Add Point</a></span>';
+                                                return '<span id="btnAdd' . $model->id . '"><a onclick="javascript:generateId(' . $model->id . ')" type="button" data-toggle="modal" data-target="#addPoint"><i class="fa fa-plus success"></i> Add/ <i class="fa fa-minus success"></i> Deduct Point</a></span>';
                                             } else {
                                                 return '<span class="badge badge-danger">Expired' . ($model->maintain_point && $model->maintain_point != "0000-00-00 00:00:00" ? " : " . date('d-m-Y', strtotime($model->maintain_point)) : "") . '</span>';
                                             }

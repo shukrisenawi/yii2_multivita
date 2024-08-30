@@ -44,9 +44,7 @@ class TransactionPointSearch extends Transaction
         }
         $query->select('remarks,value,date');
         $query->andFilterWhere(['like', 'remarks', $this->remarks]);
-        $query->andFilterWhere([
-            'type_id' => 25,
-        ]);
+        $query->andWhere('(type_id=22 OR type_id=23 OR type_id=25 OR type_id=29 OR type_id=30 OR type_id=31)');
 
         if (isset($this->dateFilter) && $this->dateFilter != '') {
             $date_explode = explode(" - ", $this->dateFilter);
