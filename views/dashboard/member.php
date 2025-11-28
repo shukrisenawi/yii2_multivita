@@ -14,36 +14,47 @@ $user = Yii::$app->user->identity;
     <?php } ?>
     <div class="col-lg-12">
         <div class="row">
-            <div class="state-overview col-lg-6">
-                <section class="card">
-                    <div class="symbol blue">
-                        <i class="fa fa-usd"></i>
-                    </div>
-                    <div class="value">
+            <?php
+            // Define card data with error handling and formatting
+            $cards = [
+                [
+                    'icon' => 'fa fa-usd',
+                    'color' => 'blue',
+                    'value' => isset($user->point) ? Helper::convertMoney($user->point) : '0',
+                    'label' => 'E-Point',
+                    'heading_class' => 'h4'
+                ],
+                [
+                    'icon' => 'fa fa-hand-holding-usd',
+                    'color' => 'yellow',
+                    'value' => isset($user->ewallet) ? Helper::convertMoney($user->ewallet) : '0',
+                    'label' => 'E-Wallet',
+                    'heading_class' => 'h4'
+                ],
+                [
+                    'icon' => 'fas fa-comments-dollar',
+                    'color' => 'bg-success',
+                    'value' => isset($repeat_bonus->total) ? Helper::convertMoney($repeat_bonus->total) : '0',
+                    'label' => 'Bonus Repeat Sale',
+                    'heading_class' => 'h4'
+                ]
+            ];
 
-                        <h3 class=" count4">
-                            <?= $user->point ?>
-                        </h3>
-                        <a href="#">E-Point</a>
-
-                    </div>
-                </section>
-            </div>
-            <div class="state-overview col-lg-6">
-                <section class="card">
-                    <div class="symbol yellow">
-                        <i class="fa fa-hand-holding-usd"></i>
-                    </div>
-                    <div class="value">
-                        <h1 class=" count4">
-                            <?= $user->ewallet ?>
-                        </h1>
-                        <a href="#">E-Wallet</a>
-                    </div>
-                </section>
-            </div>
-
-
+            foreach ($cards as $card): ?>
+                <div class="state-overview col-lg-4 col-md-6">
+                    <section class="card">
+                        <div class="symbol <?= $card['color'] ?>">
+                            <i class="<?= $card['icon'] ?>"></i>
+                        </div>
+                        <div class="value">
+                            <<?= $card['heading_class'] ?> class="count4">
+                                <?= $card['value'] ?>
+                            </<?= $card['heading_class'] ?>>
+                            <a href="#"><?= $card['label'] ?></a>
+                        </div>
+                    </section>
+                </div>
+            <?php endforeach; ?>
         </div>
     </div>
     <div class="col-lg-4">

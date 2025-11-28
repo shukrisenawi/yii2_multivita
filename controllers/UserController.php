@@ -83,12 +83,15 @@ class UserController extends MemberController
             return $this->redirect(['view', 'id' => $model->id, 'username' => $model->username]);
         }
 
+        $adminPinWallet = Transaction::find()->select('SUM(value) as total')->where('user_id=:userId AND date>=:dateStart AND date<=:dateEnd AND type_id=:typeId', [':userId' => $id, ':dateStart' => date('Y-m-01 00:00:00'), ':dateEnd' => date('Y-m-t 23:59:59'), ':typeId' => 3])->one();
+
         return $this->render('view', [
             'menusub' => $this->menusub,
             'select' => $this->select,
             'subtitle' => $this->getSubtitle(),
             'model' => $model,
-            'edit' => $edit
+            'edit' => $edit,
+            'adminPinWallet' => $adminPinWallet->total ? $adminPinWallet->total : 0,
         ]);
     }
 
