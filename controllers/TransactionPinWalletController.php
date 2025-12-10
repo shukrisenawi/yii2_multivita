@@ -55,11 +55,13 @@ class TransactionPinWalletController extends Controller
         $searchModel->notPoint = 1;
         $searchModel->type_id = 17;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $total = $dataProvider->query->sum('value');
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'user' => $user
+            'user' => $user,
+            'total' => $total
         ]);
     }
 

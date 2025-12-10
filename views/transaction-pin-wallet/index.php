@@ -14,6 +14,8 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="transaction-index">
 
+    <h3>Total Amount: <?= Helper::convertMoney($total) ?></h3>
+
     <?php Pjax::begin(); ?>
     <?php if (Yii::$app->user->identity->isAdmin()) { ?>
         <?=
@@ -29,15 +31,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     'value' => function ($model, $key, $index, $widget) {
                         return Html::a($model->user->username, \yii\helpers\Url::to(['user/view', 'id' => $model->user_id, 'username' => $model->user->username]), ['title' => 'Papar ahli']);
                     },
-                    // 'filter'
-                    // => Select2::widget([
-                    //     'name' => 'Username',
-                    //     'data' => ArrayHelper::map(Transaction::find()->asArray()->with('user')->groupBy('user_id')->all(), 'user_id', 'user.username'),
-                    //     'options' => [
-                    //         'placeholder' => 'All',
-                    //         'multiple' => false
-                    //     ],
-                    // ]),
+                    'filter' => Select2::widget([
+                        'model' => $searchModel,
+                        'attribute' => 'userFilter',
+                        'data' => ArrayHelper::map(\app\models\User::find()->innerJoin('yr_transaction', 'yr_user.id = yr_transaction.user_id')->where(['yr_transaction.type_id' => 17])->andWhere('yr_transaction.type_id NOT IN (25,27,28,29)')->groupBy('yr_user.id')->select(['yr_user.id', 'yr_user.username'])->asArray()->all(), 'id', 'username'),
+                        'options' => [
+                            'placeholder' => 'All',
+                        ],
+                    ]),
                     'format' => 'raw'
                 ],
                 'remarks',
