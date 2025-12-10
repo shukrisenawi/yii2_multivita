@@ -49,6 +49,7 @@ class Menu extends \yii\bootstrap\Widget
                 ['icon' => 'fa fa-cart-arrow-down', 'label' => 'Buy', 'url' => ['/buy/index']],
                 ['icon' => 'fa fa-network-wired', 'label' => 'Network', 'url' => ['/network/index']],
                 ['icon' => 'fa fa-exchange-alt', 'label' => 'Transaction', 'url' => ['/transaction/index']],
+                ['icon' => 'fas fa-list', 'label' => 'Pin Wallet Transaction', 'url' => ['/transaction-pin-wallet/index']],
                 ['icon' => 'fa fa-hand-holding-usd', 'label' => 'Withdrawal', 'url' => ['/withdrawal/index']],
                 ['icon' => 'fa fa-money', 'label' => 'Point Payment', 'url' => ['/point-payment/index']],
                 ['icon' => 'fa fa-usd', 'label' => 'Point Balance', 'url' => ['/point-balance/index']],
